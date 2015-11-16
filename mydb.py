@@ -8,7 +8,6 @@ from time import sleep
 
 url = "http://unipd.xyz/"
 
-
 ## getting textcommands
 db = pickledb.load('textcommandsDB.db', False)
 r = requests.get(url+'textcommands', timeout=30)
@@ -16,7 +15,6 @@ data = r.json()
 for key in range(len(data)):
     db.set(data[key]['command'],data[key]['text'])
 db.dump()
-
 
 # getting keyboardcommands
 db = pickledb.load('keyboardcommandsDB.db', False)
@@ -27,28 +25,29 @@ for key in range(len(data)):
     db.set(data[key]['command'],cd)
 db.dump()
 
-
 # getting mensa data
 db = pickledb.load('mensaDB.db', False)
 r = requests.get(url+'mensa', timeout=30)
 data = r.json()
 mensaDict = data[0]['mensa']
 sleep(1)
-
 for key in mensaDict:
     menuDict = {'primo':"",'secondo':"",'contorno':"", 'dessert':""}
     orari = mensaDict[key]['orari']
     indirizzo = mensaDict[key]['indirizzo']
-    calendario = 'Pranzo: '+mensaDict[key]['calendario']['pranzo']+'\nCena: '+mensaDict[key]['calendario']['cena']
+    calendario = 'Pranzo: ' + mensaDict[key]['calendario']['pranzo']+\
+                '\nCena: ' + mensaDict[key]['calendario']['cena']
     telefono = mensaDict[key]['telefono']
     coord = mensaDict[key]['coord']
     for mkey in mensaDict[key]['menu']:
         for piatto in mensaDict[key]['menu'][mkey]:
             menuDict[mkey] += piatto+'\n'
-    txtmenu = ' -- PRIMO --\n'+menuDict['primo'] +' -- SECONDO --\n'+menuDict['secondo'] + \
-            ' -- CONTORNO --\n'+menuDict['contorno'] +' -- DESSERT --\n'+menuDict['dessert']
-    reply = 'Orari: %s\nIndirizzo: %s\nTelefono: %s\n%s\n\n%s' % (orari, indirizzo, telefono, calendario, txtmenu)
+    txtmenu = ' -- PRIMO --\n'+ menuDict['primo'] +\
+              ' -- SECONDO --\n'+ menuDict['secondo'] + \
+              ' -- CONTORNO --\n'+ menuDict['contorno'] +\
+              ' -- DESSERT --\n'+ menuDict['dessert']
+    reply = 'Orari: %s\nIndirizzo: %s\nTelefono: %s\n%s\n\n%s' % \
+            (orari, indirizzo, telefono, calendario, txtmenu)
     cd = {'text':reply, 'coord' : mensaDict[key]['coord']}
     db.set(key, cd)
-    
 db.dump()
