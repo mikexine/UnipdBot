@@ -1,0 +1,6 @@
+*.pyc
+*.db
+*.ini
+*.log
+test.py
+/old
