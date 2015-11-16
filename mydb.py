@@ -11,23 +11,23 @@ url = "http://unipd.xyz/"
 
 
 
-# ## getting textcommands
-# db = pickledb.load('textcommandsDB.db', False)
-# r = requests.get(url+'textcommands', timeout=30)
-# data = r.json()
-# for key in range(len(data)):
-#     db.set(data[key]['command'],data[key]['text'])
-# db.dump()
+## getting textcommands
+db = pickledb.load('textcommandsDB.db', False)
+r = requests.get(url+'textcommands', timeout=30)
+data = r.json()
+for key in range(len(data)):
+    db.set(data[key]['command'],data[key]['text'])
+db.dump()
 
 
-# # getting keyboardcommands
-# db = pickledb.load('keyboardcommandsDB.db', False)
-# r = requests.get(url+'keyboardcommands', timeout=30)
-# data = r.json()
-# for key in range(len(data)):
-#     cd = {'text':data[key]['text'],'keyboard':data[key]['keyboard']}
-#     db.set(data[key]['command'],cd)
-# db.dump()
+# getting keyboardcommands
+db = pickledb.load('keyboardcommandsDB.db', False)
+r = requests.get(url+'keyboardcommands', timeout=30)
+data = r.json()
+for key in range(len(data)):
+    cd = {'text':data[key]['text'],'keyboard':data[key]['keyboard']}
+    db.set(data[key]['command'],cd)
+db.dump()
 
 db = pickledb.load('mensaDB.db', False)
 
