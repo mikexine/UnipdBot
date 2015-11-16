@@ -97,7 +97,7 @@ class pyUniPd:
         pyUniPd.writedb(risp.to_dict())
 
     def replymensaCommand(self,bot,update,message,command,chat_id):
-        mensaDB = pickledb.load('mensacommandsDB.db', False)
+        mensaDB = pickledb.load('mensaDB.db', False)
         pyUniPd.writedb(update.message.to_dict())
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = mensaDB.get(command)['text']

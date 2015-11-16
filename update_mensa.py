@@ -45,6 +45,9 @@ def getmenu(mid):
                         txt = menu[piatto][4:].split("<")[0]
                         completo[portata].append(txt)
             menu = []
+    for key in completo:
+        if completo[key] == []:
+            completo[key] = ['Non disponibile, errore su www.esupd.gov.it o mensa chiusa.']
     return completo
 
 r = requests.get("http://unipd.xyz/mensa", timeout=30)
@@ -66,6 +69,7 @@ for x in range(7):
 
 for x in range(7):
     mensaDict[mensaList[x]]['menu'] = getmenu(x+1)
+    print x
 
 data[0]['mensa'] = mensaDict
 r = requests.put("http://unipd.xyz/mensa/"+mensaID, data=json.dumps(data[0]), timeout=30)

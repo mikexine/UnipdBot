@@ -31,7 +31,7 @@ def unipd(bot):
         message = update.message.text.encode("utf-8")
         textcommands = pyUniPd.commandlist('textcommandsDB.db')
         keyboardcommands = pyUniPd.commandlist('keyboardcommandsDB.db')
-        mensacommands = pyUniPd.commandlist('mensacommandsDB.db')
+        mensacommands = pyUniPd.commandlist('mensaDB.db')
 
         for textcommand in range(len(textcommands)):
             if textcommands[textcommand].lower() in message.lower():
