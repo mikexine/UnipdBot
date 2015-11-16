@@ -58,32 +58,3 @@ for key in mensaDict:
     
 
 db.dump()
-
-
-
-
-# for key in range(len(data)):
-#     mensacurr = data[key]['command']
-#     orari = data[key]['orari']
-#     indirizzo = data[key]['indirizzo']
-#     telefono = data[key]['telefono']
-#     menucurr = menu[mensacurr]
-#     apertura = 'Pranzo: '+mensacal[0]['calendario'][mensacurr]['pranzo']+' - Cena: '+mensacal[0]['calendario'][mensacurr]['cena']
-
-#     text = "Orari: %s\nIndirizzo: %s\n Telefono: %s\n Apertura: %s\n Menu: %s" % (orari, indirizzo, telefono, apertura, menucurr)
-#     #print text
-#     cd = {'text':text, 'coord' : data[key]['coord']}
-#     db.set(mensacurr, cd)
-
-#     # cd = {'text':data[key]['text'],'keyboard':data[key]['keyboard']}
-#     # db.set(data[key]['command'],cd)
-
-
-
-
-# db.dump()
-
-# # getting aulastudiocommands
-
-
-
