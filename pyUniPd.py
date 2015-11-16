@@ -9,13 +9,7 @@ import time
 import pickledb
 from geopy.distance import vincenty
 
-
-# db = pickledb.load('aulastudiocommandsDB.db',False)
-# aulastudiocommands = u.commandlist(db)
-
-
 con = sqlite3.connect("db/logs.db")
-
 
 
 class pyUniPd:
@@ -70,13 +64,15 @@ class pyUniPd:
         except:
             pass
         try:
-            h = datetime.datetime.fromtimestamp(int(mdict["date"])).strftime("%Y-%m-%d %H:%M:%S")
+            h = (datetime.datetime.fromtimestamp(int(mdict["date"]))
+                .strftime("%Y-%m-%d %H:%M:%S"))
         except:
             pass
 
         with con: 
             cur = con.cursor()
-            cur.execute("INSERT INTO log VALUES (?,?,?,?,?,?,?,?)", (a, b, c, d, e, f, g, h))
+            cur.execute("INSERT INTO log VALUES (?,?,?,?,?,?,?,?)", 
+                       (a, b, c, d, e, f, g, h))
 
     def sendNearPOI(self,bot,chat_id,pos):
         io = (pos['latitude'],pos['longitude'])
@@ -93,7 +89,8 @@ class pyUniPd:
         if nearPOI == 'Sanfrancesco':
             prettyNearPOI = 'San Francesco'
 
-        text = 'Mensa più vicina: '+str(prettyNearPOI)+'. \nVuoi saperne di più? Scrivi o premi: /'+str(nearPOI)
+        text = 'Mensa più vicina: '+str(prettyNearPOI) + \
+               '. \nVuoi saperne di più? Scrivi o premi: /'+str(nearPOI)
         bot.sendMessage(chat_id=chat_id,text=text)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
@@ -111,7 +108,8 @@ class pyUniPd:
         reply = keyboardDB.get(command)['text']
         markup = keyboardDB.get(command)['keyboard']
         reply_markup = telegram.ReplyKeyboardMarkup(markup)
-        risp = bot.sendMessage(chat_id=chat_id, text=reply, reply_markup=reply_markup)
+        risp = bot.sendMessage(chat_id=chat_id, text=reply, 
+                              reply_markup=reply_markup)
         pyUniPd.writedb(risp.to_dict())
 
     def replymensaCommand(self,bot,update,message,command,chat_id):
@@ -122,24 +120,7 @@ class pyUniPd:
         lat = mensaDB.get(command)['coord']['lat']
         lon = mensaDB.get(command)['coord']['lon']
         reply_markup = telegram.ReplyKeyboardHide()
-
-        risp = bot.sendMessage(chat_id=chat_id, text=reply, reply_markup=reply_markup)
+        risp = bot.sendMessage(chat_id=chat_id, 
+               text=reply, reply_markup=reply_markup)
         pyUniPd.writedb(risp.to_dict())
         bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
-
-
-    def help(self):
-        return help
-
-    def allmensa(self):
-        return mensa
-
-    def mensa(self, mensa):
-        txt = "La mensa %s è in %s\nOrari: %s\nTelefono: %s" % (mense[mensa]["Nome"],mense[mensa]["Ind"], mense[mensa]["orari"], mense[mensa]["tel"])
-        lat = mense[mensa]["coord"]["lat"]
-        lon = mense[mensa]["coord"]["lon"]
-        return txt, lat, lon
-
-
-
-

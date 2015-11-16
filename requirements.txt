@@ -1,0 +1,6 @@
+beautifulsoup4
+pickledb
+requests
+python-telegram-bot
+geopy
+simplejson
