@@ -89,7 +89,11 @@ class pyUniPd:
             distDict[key] = vincenty(io, mensaCoord).kilometers
 
         nearPOI = min(distDict, key=distDict.get)
-        text = 'Mensa più vicina: '+str(nearPOI)
+        prettyNearPOI = str(nearPOI).title()
+        if nearPOI == 'Sanfrancesco':
+            prettyNearPOI = 'San Francesco'
+
+        text = 'Mensa più vicina: '+str(prettyNearPOI)+'. \nVuoi saperne di più? Scrivi o premi: /'+str(nearPOI)
         bot.sendMessage(chat_id=chat_id,text=text)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
