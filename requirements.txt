@@ -3,3 +3,4 @@ pickledb
 requests
 python-telegram-bot
 geopy
+simplejson
