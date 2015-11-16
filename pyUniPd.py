@@ -7,7 +7,7 @@ import telegram
 import sqlite3
 import time
 import pickledb
-
+from geopy.distance import vincenty
 
 
 # db = pickledb.load('aulastudiocommandsDB.db',False)
@@ -77,6 +77,24 @@ class pyUniPd:
         with con: 
             cur = con.cursor()
             cur.execute("INSERT INTO log VALUES (?,?,?,?,?,?,?,?)", (a, b, c, d, e, f, g, h))
+
+    def sendNearPOI(self,bot,chat_id,pos):
+        io = (pos['latitude'],pos['longitude'])
+        distDict = {}
+        db = pickledb.load('mensaDB.db',False)
+
+        for key in db.getall():
+            a = db.get(key)
+            mensaCoord = (a['coord']['lat'], a['coord']['lon'])
+            distDict[key] = vincenty(io, mensaCoord).kilometers
+
+        nearPOI = min(distDict, key=distDict.get)
+        prettyNearPOI = str(nearPOI).title()
+        if nearPOI == 'Sanfrancesco':
+            prettyNearPOI = 'San Francesco'
+
+        text = 'Mensa più vicina: '+str(prettyNearPOI)+'. \nVuoi saperne di più? Scrivi o premi: /'+str(nearPOI)
+        bot.sendMessage(chat_id=chat_id,text=text)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
         textDB = pickledb.load('textcommandsDB.db', False)

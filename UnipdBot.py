@@ -29,9 +29,17 @@ def unipd(bot):
     for update in bot.getUpdates(offset=LAST_UPDATE_ID, timeout=10):
         chat_id = update.message.chat_id
         message = update.message.text.encode("utf-8")
+        pos = update.message.location
+
         textcommands = pyUniPd.commandlist('textcommandsDB.db')
         keyboardcommands = pyUniPd.commandlist('keyboardcommandsDB.db')
         mensacommands = pyUniPd.commandlist('mensaDB.db')
+
+        if pos != None:
+            uni.sendNearPOI(bot,chat_id,pos)
+            LAST_UPDATE_ID = update.update_id + 1          
+        else:
+            pass
 
         for textcommand in range(len(textcommands)):
             if textcommands[textcommand].lower() in message.lower():
