@@ -51,3 +51,21 @@ for key in mensaDict:
     cd = {'text':reply, 'coord' : mensaDict[key]['coord']}
     db.set(key, cd)
 db.dump()
+
+
+db = pickledb.load('aulastudioDB.db', False)
+r = requests.get(url+'aulastudio', timeout=30)
+data = r.json()
+asDict = data[0]['aulastudio']
+for key in asDict:
+    orari = asDict[key]['orario']
+    indirizzo = asDict[key]['indirizzo']
+    telefono = asDict[key]['tel']
+    posti = asDict[key]['posti']
+    coord = asDict[key]['coord']
+    reply = 'Posti: %s\nIndirizzo: %s\nTelefono: %s\n -- Orari: -- \n%s\n' % \
+             (posti, indirizzo, telefono, orari)
+    cd = {'text':reply, 'coord' : asDict[key]['coord']}
+    db.set(key, cd)
+db.dump()
+sleep(1)

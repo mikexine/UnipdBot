@@ -113,8 +113,21 @@ class pyUniPd:
         pyUniPd.writedb(risp.to_dict())
 
     def replymensaCommand(self,bot,update,message,command,chat_id):
-        mensaDB = pickledb.load('mensaDB.db', False)
         pyUniPd.writedb(update.message.to_dict())
+        mensaDB = pickledb.load('mensaDB.db', False)
+        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+        reply = mensaDB.get(command)['text']
+        lat = mensaDB.get(command)['coord']['lat']
+        lon = mensaDB.get(command)['coord']['lon']
+        reply_markup = telegram.ReplyKeyboardHide()
+        risp = bot.sendMessage(chat_id=chat_id, 
+               text=reply, reply_markup=reply_markup)
+        pyUniPd.writedb(risp.to_dict())
+        bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
+
+    def replyASCommand(self,bot,update,message,command,chat_id):
+        pyUniPd.writedb(update.message.to_dict())
+        mensaDB = pickledb.load('aulastudioDB.db', False)
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = mensaDB.get(command)['text']
         lat = mensaDB.get(command)['coord']['lat']
