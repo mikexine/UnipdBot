@@ -32,6 +32,7 @@ def unipd(bot):
         textcommands = pyUniPd.commandlist('textcommandsDB.db')
         keyboardcommands = pyUniPd.commandlist('keyboardcommandsDB.db')
         mensacommands = pyUniPd.commandlist('mensaDB.db')
+        ascommands = pyUniPd.commandlist('aulastudioDB.db')
 
         if pos != None:
             uni.sendNearPOI(bot,chat_id,pos)
@@ -55,6 +56,12 @@ def unipd(bot):
             if mensacommands[mensacommand].lower() in message.lower():
                 uni.replymensaCommand(bot,update,message,
                                       mensacommands[mensacommand],chat_id)
+                LAST_UPDATE_ID = update.update_id + 1
+
+        for ascommand in range(len(ascommands)):
+            if ascommands[ascommand].lower() in message.lower():
+                uni.replyASCommand(bot,update,message,
+                                      ascommands[ascommand],chat_id)
                 LAST_UPDATE_ID = update.update_id + 1
 
 
