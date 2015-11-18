@@ -5,6 +5,7 @@ import telegram
 from pyUniPd import pyUniPd
 import ConfigParser
 from time import sleep
+import sys
 
 config  = ConfigParser.ConfigParser()
 config.read('settings.ini')
@@ -57,6 +58,7 @@ def unipd(bot):
         keyboardcommands = pyUniPd.commandlist('db/keyboardcommandsDB.db')
         mensacommands = pyUniPd.commandlist('db/mensaDB.db')
         ascommands = pyUniPd.commandlist('db/aulastudioDB.db')
+        bibliocommands = pyUniPd.commandlist('db/biblioDB.db')
 
         if pos != None:
             uni.sendNearPOI(bot,chat_id,pos)
@@ -88,11 +90,16 @@ def unipd(bot):
                                       ascommands[ascommand],chat_id)
                 LAST_UPDATE_ID = update.update_id + 1
 
+        for bibliocommand in range(len(bibliocommands)):
+            if bibliocommands[bibliocommand].lower() in message.lower():
+                uni.replyBiblioCommand(bot,update,message,
+                                      bibliocommands[bibliocommand],chat_id)
+                LAST_UPDATE_ID = update.update_id + 1
 
 while True:
     if __name__ == "__main__":
-        # main()
         try:
             main()
         except:
+            LAST_UPDATE_ID = update.update_id + 1
             sleep(5)

@@ -69,3 +69,19 @@ for key in asDict:
     db.set(key, cd)
 db.dump()
 sleep(1)
+
+db = pickledb.load('db/biblioDB.db', False)
+r = requests.get(url+'biblioteca', timeout=30)
+data = r.json()
+asDict = data[0]['biblioteca']
+for key in asDict:
+    nome = asDict[key]['nome']
+    orari = asDict[key]['orario']
+    indirizzo = asDict[key]['indirizzo']
+    coord = asDict[key]['coord']
+    reply = '%s\nIndirizzo: %s\n -- Orari: -- \n%s\n' % \
+             (nome, indirizzo, orari)
+    cd = {'text':reply, 'coord' : asDict[key]['coord'], 'nome' : asDict[key]['nome']}
+    db.set(key, cd)
+db.dump()
+sleep(1)

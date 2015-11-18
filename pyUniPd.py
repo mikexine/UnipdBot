@@ -120,8 +120,22 @@ class pyUniPd:
                     ', distanza: '+str(km)+' km'+ \
                     '. \nPer maggiori informazioni: /'+str(AsNearPOI)
 
-        text = textMensa + textAS
-        markup = [['/'+MensaNearPOI],['/'+AsNearPOI]]
+        distDict = {}
+        db = pickledb.load('db/biblioDB.db',False)
+        for key in db.getall():
+            a = db.get(key)
+            biblioCoord = (a['coord']['lat'], a['coord']['lon'])
+            distDict[key] = vincenty(io, biblioCoord).kilometers
+        biblioNearPOI = min(distDict, key=distDict.get)
+        km = str(round(float(distDict[biblioNearPOI]), 4))
+        prettyNearPOI = db.get(biblioNearPOI)['nome']
+        textBiblio = '\n\nBiblioteca più vicina: '+str(prettyNearPOI) + \
+                    ', distanza: '+str(km)+' km'+ \
+                    '. \nPer maggiori informazioni: /'+str(biblioNearPOI)
+
+
+        text = textMensa + textAS + textBiblio
+        markup = [['/'+MensaNearPOI],['/'+AsNearPOI],['/'+biblioNearPOI]]
         reply_markup = telegram.ReplyKeyboardMarkup(markup)
         bot.sendMessage(chat_id=chat_id,text=text, reply_markup=reply_markup)
 
@@ -161,11 +175,24 @@ class pyUniPd:
 
     def replyASCommand(self,bot,update,message,command,chat_id):
         pyUniPd.writedb(update.message.to_dict())
-        mensaDB = pickledb.load('db/aulastudioDB.db', False)
+        asDB = pickledb.load('db/aulastudioDB.db', False)
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = mensaDB.get(command)['text']
-        lat = mensaDB.get(command)['coord']['lat']
-        lon = mensaDB.get(command)['coord']['lon']
+        reply = asDB.get(command)['text']
+        lat = asDB.get(command)['coord']['lat']
+        lon = asDB.get(command)['coord']['lon']
+        reply_markup = telegram.ReplyKeyboardHide()
+        risp = bot.sendMessage(chat_id=chat_id, 
+               text=reply, reply_markup=reply_markup)
+        pyUniPd.writedb(risp.to_dict())
+        bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
+
+    def replyBiblioCommand(self,bot,update,message,command,chat_id):
+        pyUniPd.writedb(update.message.to_dict())
+        biblioDB = pickledb.load('db/biblioDB.db', False)
+        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+        reply = biblioDB.get(command)['text']
+        lat = biblioDB.get(command)['coord']['lat']
+        lon = biblioDB.get(command)['coord']['lon']
         reply_markup = telegram.ReplyKeyboardHide()
         risp = bot.sendMessage(chat_id=chat_id, 
                text=reply, reply_markup=reply_markup)
@@ -174,7 +201,6 @@ class pyUniPd:
 
     def adminStats(self,bot,update,message,command,chat_id):
         pyUniPd.writedb(update.message.to_dict())
-        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         connection = sqlite3.connect("db/logs.db")
         connection.row_factory = pyUniPd.dict_factory
         curs = connection.cursor()
