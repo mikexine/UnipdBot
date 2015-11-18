@@ -4,6 +4,7 @@
 import telegram
 from pyUniPd import pyUniPd
 import ConfigParser
+from time import sleep
 
 config  = ConfigParser.ConfigParser()
 config.read('settings.ini')
@@ -59,4 +60,7 @@ def unipd(bot):
 
 while True:
     if __name__ == "__main__":
-        main()
+        try:
+            main()
+        except:
+            sleep(5)
