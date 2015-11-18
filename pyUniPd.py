@@ -78,19 +78,42 @@ class pyUniPd:
         io = (pos['latitude'],pos['longitude'])
         distDict = {}
         db = pickledb.load('mensaDB.db',False)
-
         for key in db.getall():
             a = db.get(key)
             mensaCoord = (a['coord']['lat'], a['coord']['lon'])
             distDict[key] = vincenty(io, mensaCoord).kilometers
-
         nearPOI = min(distDict, key=distDict.get)
+        km = str(round(float(distDict[nearPOI]), 4))
         prettyNearPOI = str(nearPOI).title()
-        if nearPOI == 'Sanfrancesco':
+        if prettyNearPOI == 'Sanfrancesco':
             prettyNearPOI = 'San Francesco'
+        textMensa = 'Mensa più vicina: '+str(prettyNearPOI) + \
+                    ', distanza: '+str(km)+' km'+ \
+                    '. \nPer maggiori informazioni: /'+str(nearPOI)
 
-        text = 'Mensa più vicina: '+str(prettyNearPOI) + \
-               '. \nVuoi saperne di più? Scrivi o premi: /'+str(nearPOI)
+        io = (pos['latitude'],pos['longitude'])
+        distDict = {}
+        db = pickledb.load('aulastudioDB.db',False)
+        for key in db.getall():
+            a = db.get(key)
+            asCoord = (a['coord']['lat'], a['coord']['lon'])
+            distDict[key] = vincenty(io, asCoord).kilometers
+        nearPOI = min(distDict, key=distDict.get)
+        km = str(round(float(distDict[nearPOI]), 4))
+        prettyNearPOI = str(nearPOI).title()
+        if prettyNearPOI == 'Viavenezia':
+             prettyNearPOI = 'Via Venezia'
+        elif prettyNearPOI == 'Titolivio':
+             prettyNearPOI = 'Tito Livio'
+        elif prettyNearPOI == 'Vbranca':
+             prettyNearPOI = 'Vittore Branca'
+        elif prettyNearPOI == 'Reset':
+             prettyNearPOI = 'Circolo Reset'
+        textAS = '\n\nAula studio più vicina: '+str(prettyNearPOI) + \
+                    ', distanza: '+str(km)+' km'+ \
+                    '. \nPer maggiori informazioni: /'+str(nearPOI)
+
+        text = textMensa + textAS
         bot.sendMessage(chat_id=chat_id,text=text)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
