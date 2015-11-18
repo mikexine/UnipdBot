@@ -45,7 +45,6 @@ def unipd(bot):
             uni.adminStats(bot,update,message,'/stats',chat_id)
             LAST_UPDATE_ID = update.update_id + 1
         elif is_Stats and not isAdmin:
-            bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
             reply = "Non sei il mio creatore! Tradimento! Aiuto! Hahhahaha ciao :)"
             bot.sendMessage(chat_id=chat_id, text=reply)
             LAST_UPDATE_ID = update.update_id + 1
@@ -92,7 +91,7 @@ def unipd(bot):
 
 while True:
     if __name__ == "__main__":
-        #main()
+        # main()
         try:
             main()
         except:

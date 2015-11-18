@@ -13,7 +13,7 @@ config  = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = config.get('main','token')
 
-mymessage = 'Test'
+mymessage = 'Vuoi lasciare una recensione su di me? Clicca su questo link: https://telegram.me/storebot?start=unipdbot. Grazie!'
 
 try:
 	text = sys.argv[1]
