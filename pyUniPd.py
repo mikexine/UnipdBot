@@ -82,14 +82,14 @@ class pyUniPd:
             a = db.get(key)
             mensaCoord = (a['coord']['lat'], a['coord']['lon'])
             distDict[key] = vincenty(io, mensaCoord).kilometers
-        nearPOI = min(distDict, key=distDict.get)
-        km = str(round(float(distDict[nearPOI]), 4))
-        prettyNearPOI = str(nearPOI).title()
+        MensaNearPOI = min(distDict, key=distDict.get)
+        km = str(round(float(distDict[MensaNearPOI]), 4))
+        prettyNearPOI = str(MensaNearPOI).title()
         if prettyNearPOI == 'Sanfrancesco':
             prettyNearPOI = 'San Francesco'
         textMensa = 'Mensa più vicina: '+str(prettyNearPOI) + \
                     ', distanza: '+str(km)+' km'+ \
-                    '. \nPer maggiori informazioni: /'+str(nearPOI)
+                    '. \nPer maggiori informazioni: /'+str(MensaNearPOI)
 
         io = (pos['latitude'],pos['longitude'])
         distDict = {}
@@ -98,9 +98,9 @@ class pyUniPd:
             a = db.get(key)
             asCoord = (a['coord']['lat'], a['coord']['lon'])
             distDict[key] = vincenty(io, asCoord).kilometers
-        nearPOI = min(distDict, key=distDict.get)
-        km = str(round(float(distDict[nearPOI]), 4))
-        prettyNearPOI = str(nearPOI).title()
+        AsNearPOI = min(distDict, key=distDict.get)
+        km = str(round(float(distDict[AsNearPOI]), 4))
+        prettyNearPOI = str(AsNearPOI).title()
         if prettyNearPOI == 'Viavenezia':
              prettyNearPOI = 'Via Venezia'
         elif prettyNearPOI == 'Titolivio':
@@ -111,10 +111,12 @@ class pyUniPd:
              prettyNearPOI = 'Circolo Reset'
         textAS = '\n\nAula studio più vicina: '+str(prettyNearPOI) + \
                     ', distanza: '+str(km)+' km'+ \
-                    '. \nPer maggiori informazioni: /'+str(nearPOI)
+                    '. \nPer maggiori informazioni: /'+str(AsNearPOI)
 
         text = textMensa + textAS
-        bot.sendMessage(chat_id=chat_id,text=text)
+        markup = [['/'+MensaNearPOI],['/'+AsNearPOI]]
+        reply_markup = telegram.ReplyKeyboardMarkup(markup)
+        bot.sendMessage(chat_id=chat_id,text=text, reply_markup=reply_markup)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
         textDB = pickledb.load('textcommandsDB.db', False)
