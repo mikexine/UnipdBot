@@ -4,4 +4,4 @@
 *.log
 test.py
 /old
-/log
+log
