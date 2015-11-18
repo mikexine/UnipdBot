@@ -9,6 +9,7 @@ from time import sleep
 config  = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = config.get('main','token')
+admin = str(config.get('main','admin'))
 LAST_UPDATE_ID = None
 uni = pyUniPd()
 
@@ -28,6 +29,30 @@ def unipd(bot):
         chat_id = update.message.chat_id
         message = update.message.text.encode("utf-8")
         pos = update.message.location
+        usrChat = str(update.message.chat_id)
+
+        if usrChat == admin:
+            isAdmin = True
+        else:
+            isAdmin = False
+
+        if '/stats' in message.lower():
+            is_Stats = True
+        else:
+            is_Stats = False
+
+        if isAdmin and is_Stats:
+            uni.adminStats(bot,update,message,'/stats',chat_id)
+            LAST_UPDATE_ID = update.update_id + 1
+        elif is_Stats and not isAdmin:
+            bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+            reply = "Non sei il mio creatore! Tradimento! Aiuto! Hahhahaha ciao :)"
+            bot.sendMessage(chat_id=chat_id, text=reply)
+            LAST_UPDATE_ID = update.update_id + 1
+        else:
+            pass
+
+
 
         textcommands = pyUniPd.commandlist('db/textcommandsDB.db')
         keyboardcommands = pyUniPd.commandlist('db/keyboardcommandsDB.db')
@@ -67,7 +92,8 @@ def unipd(bot):
 
 while True:
     if __name__ == "__main__":
-        try:
-            main()
-        except:
-            sleep(5)
+        main()
+        # try:
+        #     main()
+        # except:
+        #     sleep(5)

@@ -27,6 +27,13 @@ class pyUniPd:
         return commands
 
     @classmethod
+    def dict_factory(self, curs, row):
+        d = {}
+        for idx, col in enumerate(curs.description):
+            d[col[0]] = row[idx]
+        return d
+
+    @classmethod
     def writedb(self, mdict):
         a, b, c, d, e, f, g, h = [0,0,0,0,0,0,0,0]
 
@@ -164,3 +171,51 @@ class pyUniPd:
                text=reply, reply_markup=reply_markup)
         pyUniPd.writedb(risp.to_dict())
         bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
+
+    def adminStats(self,bot,update,message,command,chat_id):
+        pyUniPd.writedb(update.message.to_dict())
+        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+        connection = sqlite3.connect("db/logs.db")
+        connection.row_factory = pyUniPd.dict_factory
+        curs = connection.cursor()
+        curs.execute("select * from log")
+        results = curs.fetchall()
+        connection.close()
+        userList = []
+        nMsg = 0
+        for i in range(len(results)):
+            nMsg += 1
+            user = results[i]['first_name']+'-'+results[i]['last_name']+'-'+results[i]['username']
+            if not user in userList:
+                userList.append(user)
+        uIDList = []
+        for i in range(len(results)):
+            chat = results[i]['u_id']
+            if not chat in uIDList:
+                uIDList.append(chat)
+        userDict = {}
+        nMsgUser = {}
+        for us in uIDList:
+            nMsgUser[us] = 0
+        for i in range(len(results)):
+            nMsgUser[results[i]['u_id']] += 1
+        uDict = {}
+        for key in nMsgUser:
+            uDict[key] = {
+                'nMsg':nMsgUser[key],
+                'name':''}
+        for i in range(len(results)):
+            uDict[results[i]['u_id']]['name'] = results[i]['first_name']+'~'+results[i]['last_name']+' | @'+results[i]['username']
+        out = ''
+        out = out + 'Number of single users: '+str(len(userList)-1)+'\n'
+        out = out + 'Number of single messages exchanged: '+str(nMsg)+'\n'
+        out = out + 'Number of single messages sent: '+str(nMsg/2)+'\n'
+        out = out + '\n -- TOP 20 USERS -- \n'
+        top = []
+        for w in sorted(uDict, key=uDict.get, reverse=True):
+            tx = uDict[w]['name']+' | nMsg: '+str(uDict[w]['nMsg'])
+            top.append(tx)
+        for i in range(20):
+            out = out + str(i+1)+' '+top[i]+'\n\n'
+        reply = out
+        bot.sendMessage(chat_id=chat_id, text=reply)
