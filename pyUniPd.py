@@ -98,7 +98,9 @@ class pyUniPd:
         pyUniPd.writedb(update.message.to_dict())
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = textDB.get(command)
-        risp = bot.sendMessage(chat_id=chat_id, text=reply)
+        reply_markup = telegram.ReplyKeyboardHide()
+        risp = bot.sendMessage(chat_id=chat_id, text=reply,
+                               reply_markup=reply_markup)
         pyUniPd.writedb(risp.to_dict())
 
     def replykeyboardCommand(self,bot,update,message,command,chat_id):
