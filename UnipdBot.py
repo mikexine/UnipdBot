@@ -92,8 +92,8 @@ def unipd(bot):
 
 while True:
     if __name__ == "__main__":
-        main()
-        # try:
-        #     main()
-        # except:
-        #     sleep(5)
+        #main()
+        try:
+            main()
+        except:
+            sleep(5)
