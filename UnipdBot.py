@@ -29,10 +29,10 @@ def unipd(bot):
         message = update.message.text.encode("utf-8")
         pos = update.message.location
 
-        textcommands = pyUniPd.commandlist('textcommandsDB.db')
-        keyboardcommands = pyUniPd.commandlist('keyboardcommandsDB.db')
-        mensacommands = pyUniPd.commandlist('mensaDB.db')
-        ascommands = pyUniPd.commandlist('aulastudioDB.db')
+        textcommands = pyUniPd.commandlist('db/textcommandsDB.db')
+        keyboardcommands = pyUniPd.commandlist('db/keyboardcommandsDB.db')
+        mensacommands = pyUniPd.commandlist('db/mensaDB.db')
+        ascommands = pyUniPd.commandlist('db/aulastudioDB.db')
 
         if pos != None:
             uni.sendNearPOI(bot,chat_id,pos)

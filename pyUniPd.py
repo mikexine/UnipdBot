@@ -8,6 +8,7 @@ import sqlite3
 import time
 import pickledb
 from geopy.distance import vincenty
+import arrow
 
 con = sqlite3.connect("db/logs.db")
 
@@ -64,8 +65,7 @@ class pyUniPd:
         except:
             pass
         try:
-            h = (datetime.datetime.fromtimestamp(int(mdict["date"]))
-                .strftime("%Y-%m-%d %H:%M:%S"))
+            h = arrow.utcnow().format('YYYY-MM-DD HH:mm:ss:SSS ZZ') 
         except:
             pass
 
@@ -77,7 +77,7 @@ class pyUniPd:
     def sendNearPOI(self,bot,chat_id,pos):
         io = (pos['latitude'],pos['longitude'])
         distDict = {}
-        db = pickledb.load('mensaDB.db',False)
+        db = pickledb.load('db/mensaDB.db',False)
         for key in db.getall():
             a = db.get(key)
             mensaCoord = (a['coord']['lat'], a['coord']['lon'])
@@ -93,7 +93,7 @@ class pyUniPd:
 
         io = (pos['latitude'],pos['longitude'])
         distDict = {}
-        db = pickledb.load('aulastudioDB.db',False)
+        db = pickledb.load('db/aulastudioDB.db',False)
         for key in db.getall():
             a = db.get(key)
             asCoord = (a['coord']['lat'], a['coord']['lon'])
@@ -119,7 +119,7 @@ class pyUniPd:
         bot.sendMessage(chat_id=chat_id,text=text, reply_markup=reply_markup)
 
     def replytextCommand(self,bot,update,message,command,chat_id):
-        textDB = pickledb.load('textcommandsDB.db', False)
+        textDB = pickledb.load('db/textcommandsDB.db', False)
         pyUniPd.writedb(update.message.to_dict())
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = textDB.get(command)
@@ -129,7 +129,7 @@ class pyUniPd:
         pyUniPd.writedb(risp.to_dict())
 
     def replykeyboardCommand(self,bot,update,message,command,chat_id):
-        keyboardDB = pickledb.load('keyboardcommandsDB.db', False)
+        keyboardDB = pickledb.load('db/keyboardcommandsDB.db', False)
         pyUniPd.writedb(update.message.to_dict())
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = keyboardDB.get(command)['text']
@@ -141,7 +141,7 @@ class pyUniPd:
 
     def replymensaCommand(self,bot,update,message,command,chat_id):
         pyUniPd.writedb(update.message.to_dict())
-        mensaDB = pickledb.load('mensaDB.db', False)
+        mensaDB = pickledb.load('db/mensaDB.db', False)
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = mensaDB.get(command)['text']
         lat = mensaDB.get(command)['coord']['lat']
@@ -154,7 +154,7 @@ class pyUniPd:
 
     def replyASCommand(self,bot,update,message,command,chat_id):
         pyUniPd.writedb(update.message.to_dict())
-        mensaDB = pickledb.load('aulastudioDB.db', False)
+        mensaDB = pickledb.load('db/aulastudioDB.db', False)
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
         reply = mensaDB.get(command)['text']
         lat = mensaDB.get(command)['coord']['lat']

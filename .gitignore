@@ -3,5 +3,5 @@
 *.ini
 *.log
 test.py
-sendMe.py
 /old
+/log

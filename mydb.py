@@ -9,7 +9,7 @@ from time import sleep
 url = "http://unipd.xyz/"
 
 ## getting textcommands
-db = pickledb.load('textcommandsDB.db', False)
+db = pickledb.load('db/textcommandsDB.db', False)
 r = requests.get(url+'textcommands', timeout=30)
 data = r.json()
 for key in range(len(data)):
@@ -17,7 +17,7 @@ for key in range(len(data)):
 db.dump()
 
 # getting keyboardcommands
-db = pickledb.load('keyboardcommandsDB.db', False)
+db = pickledb.load('db/keyboardcommandsDB.db', False)
 r = requests.get(url+'keyboardcommands', timeout=30)
 data = r.json()
 for key in range(len(data)):
@@ -26,7 +26,7 @@ for key in range(len(data)):
 db.dump()
 
 # getting mensa data
-db = pickledb.load('mensaDB.db', False)
+db = pickledb.load('db/mensaDB.db', False)
 r = requests.get(url+'mensa', timeout=30)
 data = r.json()
 mensaDict = data[0]['mensa']
@@ -53,7 +53,7 @@ for key in mensaDict:
 db.dump()
 
 
-db = pickledb.load('aulastudioDB.db', False)
+db = pickledb.load('db/aulastudioDB.db', False)
 r = requests.get(url+'aulastudio', timeout=30)
 data = r.json()
 asDict = data[0]['aulastudio']
