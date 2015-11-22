@@ -76,7 +76,6 @@ r = requests.get("http://unipd.xyz/mensa", timeout=30)
 data = r.json()
 mensaDict = data[1]['mensa']
 mensaID = data[1]['id']
-print mensaID
 
 try:
     cal = getcal()
@@ -108,9 +107,6 @@ r = requests.put("http://unipd.xyz/mensa/" + mensaID,
 
 updateID = data[0]['id']
 now = arrow.now('CET').format('HH:mm - DD-MM-YYYY')
-print now
 data[0]['mensa']['last_update'] = now
-print data[0]
 r = requests.put("http://unipd.xyz/mensa/" + updateID,
                  data=json.dumps(data[0]), headers=headers, timeout=30)
-print r.json()
