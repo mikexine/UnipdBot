@@ -1,11 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import requests
-import json
 import telegram
 import sqlite3
-import time
 import pickledb
 from geopy.distance import vincenty
 import arrow
@@ -19,7 +16,7 @@ class pyUniPd:
         pass
 
     @classmethod
-    def commandlist(self,db):
+    def commandlist(self, db):
         mydb = pickledb.load(db, False)
         commands = []
         for command in mydb.getall():
@@ -35,14 +32,14 @@ class pyUniPd:
 
     @classmethod
     def writedb(self, mdict):
-        a, b, c, d, e, f, g, h = [0,0,0,0,0,0,0,0]
+        a, b, c, d, e, f, g, h = [0, 0, 0, 0, 0, 0, 0, 0]
 
         try:
             a = mdict["message_id"]
         except:
             pass
 
-        try: 
+        try:
             b = mdict["from"]["id"]
         except:
             pass
@@ -72,19 +69,19 @@ class pyUniPd:
         except:
             pass
         try:
-            h = arrow.utcnow().format('YYYY-MM-DD HH:mm:ss:SSS ZZ') 
+            h = arrow.utcnow().format('YYYY-MM-DD HH:mm:ss:SSS ZZ')
         except:
             pass
 
-        with con: 
+        with con:
             cur = con.cursor()
-            cur.execute("INSERT INTO log VALUES (?,?,?,?,?,?,?,?)", 
-                       (a, b, c, d, e, f, g, h))
+            cur.execute("INSERT INTO log VALUES (?,?,?,?,?,?,?,?)",
+                        (a, b, c, d, e, f, g, h))
 
-    def sendNearPOI(self,bot,chat_id,pos):
-        io = (pos['latitude'],pos['longitude'])
+    def sendNearPOI(self, bot, chat_id, pos):
+        io = (pos['latitude'], pos['longitude'])
         distDict = {}
-        db = pickledb.load('db/mensaDB.db',False)
+        db = pickledb.load('db/mensaDB.db', False)
         for key in db.getall():
             a = db.get(key)
             mensaCoord = (a['coord']['lat'], a['coord']['lon'])
@@ -94,13 +91,13 @@ class pyUniPd:
         prettyNearPOI = str(MensaNearPOI).title()
         if prettyNearPOI == 'Sanfrancesco':
             prettyNearPOI = 'San Francesco'
-        textMensa = 'Mensa più vicina: '+str(prettyNearPOI) + \
-                    ', distanza: '+str(km)+' km'+ \
-                    '. \nPer maggiori informazioni: /'+str(MensaNearPOI)
+        textMensa = 'Mensa più vicina: ' + str(prettyNearPOI) + \
+                    ', distanza: ' + str(km) + ' km' + \
+                    '. \nPer maggiori informazioni: /' + str(MensaNearPOI)
 
-        io = (pos['latitude'],pos['longitude'])
+        io = (pos['latitude'], pos['longitude'])
         distDict = {}
-        db = pickledb.load('db/aulastudioDB.db',False)
+        db = pickledb.load('db/aulastudioDB.db', False)
         for key in db.getall():
             a = db.get(key)
             asCoord = (a['coord']['lat'], a['coord']['lon'])
@@ -109,19 +106,19 @@ class pyUniPd:
         km = str(round(float(distDict[AsNearPOI]), 4))
         prettyNearPOI = str(AsNearPOI).title()
         if prettyNearPOI == 'Viavenezia':
-             prettyNearPOI = 'Via Venezia'
+            prettyNearPOI = 'Via Venezia'
         elif prettyNearPOI == 'Titolivio':
-             prettyNearPOI = 'Tito Livio'
+            prettyNearPOI = 'Tito Livio'
         elif prettyNearPOI == 'Vbranca':
-             prettyNearPOI = 'Vittore Branca'
+            prettyNearPOI = 'Vittore Branca'
         elif prettyNearPOI == 'Reset':
-             prettyNearPOI = 'Circolo Reset'
-        textAS = '\n\nAula studio più vicina: '+str(prettyNearPOI) + \
-                    ', distanza: '+str(km)+' km'+ \
-                    '. \nPer maggiori informazioni: /'+str(AsNearPOI)
+            prettyNearPOI = 'Circolo Reset'
+        textAS = '\n\nAula studio più vicina: ' + str(prettyNearPOI) + \
+            ', distanza: ' + str(km) + ' km' + \
+            '. \nPer maggiori informazioni: /' + str(AsNearPOI)
 
         distDict = {}
-        db = pickledb.load('db/biblioDB.db',False)
+        db = pickledb.load('db/biblioDB.db', False)
         for key in db.getall():
             a = db.get(key)
             biblioCoord = (a['coord']['lat'], a['coord']['lon'])
@@ -129,77 +126,35 @@ class pyUniPd:
         biblioNearPOI = min(distDict, key=distDict.get)
         km = str(round(float(distDict[biblioNearPOI]), 4))
         prettyNearPOI = db.get(biblioNearPOI)['nome']
-        textBiblio = '\n\nBiblioteca più vicina: '+str(prettyNearPOI) + \
-                    ', distanza: '+str(km)+' km'+ \
-                    '. \nPer maggiori informazioni: /'+str(biblioNearPOI)
-
+        textBiblio = '\n\nBiblioteca più vicina: ' + str(prettyNearPOI) + \
+            ', distanza: ' + str(km) + ' km' + \
+            '. \nPer maggiori informazioni: /' + str(biblioNearPOI)
 
         text = textMensa + textAS + textBiblio
-        markup = [['/'+MensaNearPOI],['/'+AsNearPOI],['/'+biblioNearPOI]]
+        markup = [['/' + MensaNearPOI, '/' + AsNearPOI],
+                  ['/' + biblioNearPOI, '/home']]
         reply_markup = telegram.ReplyKeyboardMarkup(markup)
-        bot.sendMessage(chat_id=chat_id,text=text, reply_markup=reply_markup)
+        bot.sendMessage(chat_id=chat_id, text=text, reply_markup=reply_markup)
 
-    def replytextCommand(self,bot,update,message,command,chat_id):
-        textDB = pickledb.load('db/textcommandsDB.db', False)
+    def reply(self, bot, update, message, command, chat_id):
+        commandsDB = pickledb.load('db/commandsDB.db', False)
         pyUniPd.writedb(update.message.to_dict())
         bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = textDB.get(command)
-        reply_markup = telegram.ReplyKeyboardHide()
+        reply = commandsDB.get(command)['text']
+        markup = commandsDB.get(command)['keyboard']
+        reply_markup = telegram.ReplyKeyboardMarkup(markup)
         risp = bot.sendMessage(chat_id=chat_id, text=reply,
                                reply_markup=reply_markup)
         pyUniPd.writedb(risp.to_dict())
 
-    def replykeyboardCommand(self,bot,update,message,command,chat_id):
-        keyboardDB = pickledb.load('db/keyboardcommandsDB.db', False)
-        pyUniPd.writedb(update.message.to_dict())
-        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = keyboardDB.get(command)['text']
-        markup = keyboardDB.get(command)['keyboard']
-        reply_markup = telegram.ReplyKeyboardMarkup(markup)
-        risp = bot.sendMessage(chat_id=chat_id, text=reply, 
-                              reply_markup=reply_markup)
-        pyUniPd.writedb(risp.to_dict())
+        if commandsDB.get(command)['coord'] is not None:
+            lat = commandsDB.get(command)['coord']['lat']
+            lon = commandsDB.get(command)['coord']['lon']
+            bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
+        else:
+            pass
 
-    def replymensaCommand(self,bot,update,message,command,chat_id):
-        pyUniPd.writedb(update.message.to_dict())
-        mensaDB = pickledb.load('db/mensaDB.db', False)
-        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = mensaDB.get(command)['text']
-        lat = mensaDB.get(command)['coord']['lat']
-        lon = mensaDB.get(command)['coord']['lon']
-        reply_markup = telegram.ReplyKeyboardHide()
-        risp = bot.sendMessage(chat_id=chat_id, 
-               text=reply, reply_markup=reply_markup)
-        pyUniPd.writedb(risp.to_dict())
-        bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
-
-    def replyASCommand(self,bot,update,message,command,chat_id):
-        pyUniPd.writedb(update.message.to_dict())
-        asDB = pickledb.load('db/aulastudioDB.db', False)
-        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = asDB.get(command)['text']
-        lat = asDB.get(command)['coord']['lat']
-        lon = asDB.get(command)['coord']['lon']
-        reply_markup = telegram.ReplyKeyboardHide()
-        risp = bot.sendMessage(chat_id=chat_id, 
-               text=reply, reply_markup=reply_markup)
-        pyUniPd.writedb(risp.to_dict())
-        bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
-
-    def replyBiblioCommand(self,bot,update,message,command,chat_id):
-        pyUniPd.writedb(update.message.to_dict())
-        biblioDB = pickledb.load('db/biblioDB.db', False)
-        bot.sendChatAction(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-        reply = biblioDB.get(command)['text']
-        lat = biblioDB.get(command)['coord']['lat']
-        lon = biblioDB.get(command)['coord']['lon']
-        reply_markup = telegram.ReplyKeyboardHide()
-        risp = bot.sendMessage(chat_id=chat_id, 
-               text=reply, reply_markup=reply_markup)
-        pyUniPd.writedb(risp.to_dict())
-        bot.sendLocation(chat_id=chat_id, latitude=lat, longitude=lon)
-
-    def adminStats(self,bot,update,message,command,chat_id):
+    def adminStats(self, bot, update, message, command, chat_id):
         pyUniPd.writedb(update.message.to_dict())
         connection = sqlite3.connect("db/logs.db")
         connection.row_factory = pyUniPd.dict_factory
@@ -211,15 +166,15 @@ class pyUniPd:
         nMsg = 0
         for i in range(len(results)):
             nMsg += 1
-            user = results[i]['first_name']+'-'+results[i]['last_name']+'-'+results[i]['username']
-            if not user in userList:
+            user = results[i]['first_name'] + '-' + \
+                results[i]['last_name'] + '-' + results[i]['username']
+            if user not in userList:
                 userList.append(user)
         uIDList = []
         for i in range(len(results)):
             chat = results[i]['u_id']
-            if not chat in uIDList:
+            if chat not in uIDList:
                 uIDList.append(chat)
-        userDict = {}
         nMsgUser = {}
         for us in uIDList:
             nMsgUser[us] = 0
@@ -228,20 +183,21 @@ class pyUniPd:
         uDict = {}
         for key in nMsgUser:
             uDict[key] = {
-                'nMsg':nMsgUser[key],
-                'name':''}
+                'nMsg': nMsgUser[key],
+                'name': ''}
         for i in range(len(results)):
-            uDict[results[i]['u_id']]['name'] = results[i]['first_name']+'~'+results[i]['last_name']+' | @'+results[i]['username']
+            uDict[results[i]['u_id']]['name'] = results[i]['first_name'] + \
+                '~' + results[i]['last_name'] + ' | @' + results[i]['username']
         out = ''
-        out = out + 'Number of single users: '+str(len(userList)-1)+'\n'
-        out = out + 'Number of single messages exchanged: '+str(nMsg)+'\n'
-        out = out + 'Number of single messages sent: '+str(nMsg/2)+'\n'
+        out = out + 'Number of single users: ' + str(len(userList) - 1) + '\n'
+        out = out + 'Number of single messages exchanged: ' + str(nMsg) + '\n'
+        out = out + 'Number of single messages sent: ' + str(nMsg / 2) + '\n'
         out = out + '\n -- TOP 20 USERS -- \n'
         top = []
         for w in sorted(uDict, key=uDict.get, reverse=True):
-            tx = uDict[w]['name']+' | nMsg: '+str(uDict[w]['nMsg'])
+            tx = uDict[w]['name'] + ' | nMsg: ' + str(uDict[w]['nMsg'])
             top.append(tx)
         for i in range(20):
-            out = out + str(i+1)+' '+top[i]+'\n\n'
+            out = out + str(i + 1) + ' ' + top[i] + '\n\n'
         reply = out
         bot.sendMessage(chat_id=chat_id, text=reply)
