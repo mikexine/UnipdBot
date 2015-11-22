@@ -3,4 +3,5 @@
 *.ini
 *.log
 test.py
+test2.py
 /old
