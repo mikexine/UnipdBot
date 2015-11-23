@@ -157,6 +157,10 @@ class pyUniPd:
         connection = sqlite3.connect("db/logs.db")
         connection.row_factory = pyUniPd.dict_factory
         curs = connection.cursor()
+        curs.execute("DELETE FROM log where username='UnipdBot'")
+        curs.execute("DELETE FROM log where username='mikexine'")
+        curs.execute("DELETE FROM log where username='mikexine_1234'")
+        connection.commit()
         curs.execute("select * from log")
         results = curs.fetchall()
         connection.close()
@@ -188,14 +192,13 @@ class pyUniPd:
                 '~' + results[i]['last_name'] + ' | @' + results[i]['username']
         out = ''
         out = out + 'Number of single users: ' + str(len(userList) - 1) + '\n'
-        out = out + 'Number of single messages exchanged: ' + str(nMsg) + '\n'
-        out = out + 'Number of single messages sent: ' + str(nMsg / 2) + '\n'
+        out = out + 'Number of single messages sent: ' + str(nMsg) + '\n'
         out = out + '\n -- TOP 20 USERS -- \n'
         top = []
         for w in sorted(uDict, key=uDict.get, reverse=True):
             tx = uDict[w]['name'] + ' | nMsg: ' + str(uDict[w]['nMsg'])
             top.append(tx)
         for i in range(20):
-            out = out + str(i + 1) + ' ' + top[i] + '\n\n'
+            out = out + str(i + 1) + ' ' + top[i] + '\n'
         reply = out
         bot.sendMessage(chat_id=chat_id, text=reply)
