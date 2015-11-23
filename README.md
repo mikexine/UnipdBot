@@ -1,5 +1,3 @@
-[![Documentation Status](https://readthedocs.org/projects/unipdbot/badge/?version=latest)](http://unipdbot.readthedocs.org/en/latest/?badge=latest)
-
 # UnipdBot
 
 An unofficial Telegram bot for students of [University of Padua](http://www.unipd.it/) (Unipd) - try it at [@UnipdBot](https://telegram.me/UnipdBot)!
