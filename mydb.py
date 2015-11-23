@@ -40,7 +40,7 @@ for key in mensaDict:
               ' -- CONTORNO --\n' + menuDict['contorno'] +\
               ' -- DESSERT --\n' + menuDict['dessert']
     reply = 'Orari: %s\nIndirizzo: %s\nTelefono: %s\n' \
-            '\ nUltimo aggiornamento: %s\n\n%s\n\n%s' % \
+            'Ultimo aggiornamento: %s\n\n%s\n\n%s' % \
             (orari, indirizzo, telefono, lastUpdate, calendario, txtmenu)
     cd = {
         'text': reply,
