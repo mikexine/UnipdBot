@@ -1,4 +1,4 @@
-[# UnipdBot
+# UnipdBot
 
 An unofficial Telegram bot for students of [University of Padua](http://www.unipd.it/) (Unipd) - try it at [@UnipdBot](https://telegram.me/UnipdBot)!
 
