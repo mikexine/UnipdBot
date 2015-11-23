@@ -73,4 +73,7 @@ while True:
         try:
             main()
         except:
+            txt = 'Some error happened. Check me!'
+            bot = telegram.Bot(token)
+            bot.sendMessage(chat_id=admin, text=txt)
             sleep(5)

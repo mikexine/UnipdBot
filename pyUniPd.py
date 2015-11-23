@@ -143,10 +143,8 @@ class pyUniPd:
         reply = commandsDB.get(command)['text']
         markup = commandsDB.get(command)['keyboard']
         reply_markup = telegram.ReplyKeyboardMarkup(markup)
-        risp = bot.sendMessage(chat_id=chat_id, text=reply,
-                               reply_markup=reply_markup)
-        pyUniPd.writedb(risp.to_dict())
-
+        bot.sendMessage(chat_id=chat_id, text=reply,
+                        reply_markup=reply_markup)
         if commandsDB.get(command)['coord'] is not None:
             lat = commandsDB.get(command)['coord']['lat']
             lon = commandsDB.get(command)['coord']['lon']
