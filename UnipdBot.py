@@ -47,7 +47,8 @@ def unipd(bot):
             uni.adminStats(bot, update, message, '/stats', chat_id)
             LAST_UPDATE_ID = update.update_id + 1
         elif is_Stats and not isAdmin:
-            reply = "Non sei il mio creatore! Tradimento! Aiuto! Hahhahaha ciao :)"
+            reply = "Non sei il mio creatore! Tradimento! " \
+                    "Aiuto! Hahhahaha ciao :)"
             bot.sendMessage(chat_id=chat_id, text=reply)
             LAST_UPDATE_ID = update.update_id + 1
         else:

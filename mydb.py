@@ -39,7 +39,8 @@ for key in mensaDict:
               ' -- SECONDO --\n' + menuDict['secondo'] + \
               ' -- CONTORNO --\n' + menuDict['contorno'] +\
               ' -- DESSERT --\n' + menuDict['dessert']
-    reply = 'Orari: %s\nIndirizzo: %s\nTelefono: %s\n\nUltimo aggiornamento: %s\n\n%s\n\n%s' % \
+    reply = 'Orari: %s\nIndirizzo: %s\nTelefono: %s\n' \
+            '\ nUltimo aggiornamento: %s\n\n%s\n\n%s' % \
             (orari, indirizzo, telefono, lastUpdate, calendario, txtmenu)
     cd = {
         'text': reply,
@@ -98,7 +99,7 @@ db.set('home', menu)
 db.dump()
 
 
-### GETTING DATA FOR NEAR POINTS OF INTEREST ####
+# GETTING DATA FOR NEAR POINTS OF INTEREST
 
 # getting mensa data
 db = pickledb.load('db/mensaDB.db', False)
