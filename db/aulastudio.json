@@ -1,0 +1,82 @@
+{
+  "vbranca": {
+    "orario": "Lunedì - Venerdì: 08:30 - 19:45.",
+    "indirizzo": "Via Portello, 19",
+    "tel": "049 8077632",
+    "posti": "96",
+    "coord": {
+      "lat": 45.408017,
+      "lon": 11.89218
+    }
+  },
+  "reset": {
+    "orario": "Lunedì - Sabato: 09:00 - 22:00.",
+    "indirizzo": "Via Loredan, 26",
+    "tel": "049 7806663",
+    "posti": "25",
+    "coord": {
+      "lat": 45.409799,
+      "lon": 11.891026
+    }
+  },
+  "marsala": {
+    "orario": "Lunedì - Venerdì: 08:30 - 20:00.",
+    "indirizzo": "Via Marsala 15",
+    "tel": "049 8273915",
+    "posti": "120",
+    "coord": {
+      "lat": 45.405012,
+      "lon": 11.875361
+    }
+  },
+  "titolivio": {
+    "orario": "Lunedì - Venerdì: 08:30 - 23:00.\nSabato 09:00 - 23:00.\nDomenica: 09:00 - 19:00. ",
+    "indirizzo": "Galleria Tito Livio, 7",
+    "tel": "335 6628286",
+    "posti": "180",
+    "coord": {
+      "lat": 45.405485,
+      "lon": 11.87753
+    }
+  },
+  "jappelli": {
+    "orario": "Lunedì - Venerdì: 08:30 - 23:00.\nSabato: 09:00 - 20:00.\nDomenica: 14:00 - 19:00.",
+    "indirizzo": "Via Jappelli, 9",
+    "tel": "049 8277060",
+    "posti": "184",
+    "coord": {
+      "lat": 45.408275,
+      "lon": 11.884999
+    }
+  },
+  "viavenezia": {
+    "orario": "Lunedì - Venerdì: 08:30 - 19:00.\nSabato: 08:30 - 13:00.",
+    "indirizzo": "Via Venezia, 13",
+    "tel": "049 8276413",
+    "posti": "240",
+    "coord": {
+      "lat": 45.411624,
+      "lon": 11.894449
+    }
+  },
+  "galilei": {
+    "orario": "Lunedì - Venerdì: 08:30 - 20:00.",
+    "indirizzo": "Via Galilei, 42",
+    "tel": "049 8273909",
+    "posti": "280",
+    "coord": {
+      "lat": 45.403446,
+      "lon": 11.87996
+    }
+  },
+  "pollaio": {
+    "orario": "Lunedì - Venerdì: 08:30 - 01:00 (di notte).\nSabato e Domenica: 09:00 - 01:00 (di notte).",
+    "indirizzo": "Via Belzoni, 7",
+    "tel": "049 8275931",
+    "posti": "100",
+    "coord": {
+      "lat": 45.407945,
+      "lon": 11.886559
+    }
+  }
+}
