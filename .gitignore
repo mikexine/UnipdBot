@@ -6,3 +6,6 @@ test.py
 test2.py
 /old
 .DS_Store
+*.pickledb
+env/
+exclude.txt

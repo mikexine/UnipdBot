@@ -13,12 +13,9 @@ config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = config.get('main', 'token')
 
-mymessage = 'Spero di essere utile! Se ti va, lascia una recensione su di me... 5 stelle sarebbero ottime! ;) Clicca su questo link: https://telegram.me/storebot?start=unipdbot. Grazie!'
+mymessage = "Ciao! Sono stato aggiornato, dovrei essere leggermente più veloce! Lo sapevi che puoi anche inviarmi la tua posizione? Saprai subito quale è l'aula studio, la mensa e la biblioteca più vicine a te aperte in questo momento! ;)"
 
-try:
-    text = sys.argv[1]
-except:
-    text = mymessage
+text = mymessage
 
 print 'sending message: ' + text
 
@@ -31,23 +28,15 @@ users = set([])
 for row in rows:
     users.add(str(row[6]))
 
+print users
+
 bot = telegram.Bot(token)
 
 for user in users:
-<<<<<<< HEAD
-	try:
-		bot.sendMessage(chat_id=user,text=text)
-		print 'Message sent to: ' + user
-		sleep(0.4)
-	except telegram.error.TelegramError as e:
-		if 'unauthorized' in str(e).lower():
-			print 'unauthorized error with user: ' + user
-=======
     try:
         bot.sendMessage(chat_id=user, text=text)
         print 'Message sent to: ' + user
-        sleep(0.4)
+        sleep(0.2)
     except telegram.error.TelegramError as e:
         if 'unauthorized' in str(e).lower():
             print 'unauthorized error with user: ' + user
->>>>>>> develop
