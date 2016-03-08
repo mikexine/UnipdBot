@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 
 from telegram import Updater, ReplyKeyboardMarkup
+from telegram.utils.botan import Botan
 import logging
 import pyUnipdbot
 import ConfigParser
 
-
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = str(config.get('main', 'token'))
+botan_token = str(config.get('main', 'botan'))
+b = Botan(botan_token)
 
 TOPCOMMANDS = ['start', 'home', 'help', 'botinfo',
                'mensa', 'aulastudio', 'biblioteca',
@@ -30,6 +32,7 @@ logger = logging.getLogger(__name__)
 def home(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.home()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -38,6 +41,7 @@ def home(bot, update):
 def botinfo(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.botInfo()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -46,6 +50,7 @@ def botinfo(bot, update):
 def mensa(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.mensa()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -54,6 +59,7 @@ def mensa(bot, update):
 def aulastudio(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.aulastudio()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -62,6 +68,7 @@ def aulastudio(bot, update):
 def biblioteca(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.biblioteca()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -70,6 +77,7 @@ def biblioteca(bot, update):
 def dirittostudio(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.dirittostudio()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -78,6 +86,7 @@ def dirittostudio(bot, update):
 def udupadova(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.udupadova()
+    b.track(update.message, update.message.text)
     bot.sendMessage(update.message.chat_id,
                     text=reply,
                     reply_markup=ReplyKeyboardMarkup(markup))
@@ -85,6 +94,7 @@ def udupadova(bot, update):
 
 def replier(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
+    b.track(update.message, update.message.text)
     command = str(update.message.text).replace('/', '')
     command.lower()
     reply, markup, lat, lon = pyUnipdbot.replier(command)
@@ -100,6 +110,7 @@ def replier(bot, update):
 def position(bot, update):
     msg = update.message.to_dict()
     pyUnipdbot.writedb(msg)
+    b.track(update.message, 'position')
     try:
         usrCoord = msg['location']
         reply, markup = pyUnipdbot.position(usrCoord)
@@ -111,7 +122,6 @@ def position(bot, update):
 
 
 def error(bot, update, error):
-    pyUnipdbot.writedb(update.message.to_dict())
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
