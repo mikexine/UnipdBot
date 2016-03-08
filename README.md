@@ -18,10 +18,9 @@ Just some simple instructions if you want to test the bot
 - `pip install -r requirements.txt`
 - Rename settings.ini.sample to settings.ini
 - Create an access token with Telegram's @Botfather and place it in `settings.ini`. 
+- Create an access token with Botan (for analytics) and place it in `settings.ini`. 
 - Switch into the `db` folder and run `python createdb_logs.py`.
-- Run `mydb.py` to create a local `pickledb` database in which you'll store commands. 
-- If you want to use the `/stats` command, you must retrieve your Telegram User Id and put it into `settings.ini`.
-- The `auth` setting in `settings.ini` is needed in `update_mensa.py`. Only when a valid `auth` token is supplied, you'll be able to make `PUT/POST/DELETE` requests to unipd.xyz. `GET` requests are all public.
+- Run `create_localdb.py` to create a local `pickledb` database in which you'll store commands. 
 
 
 ### License and credits
