@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from telegram import Updater, ReplyKeyboardMarkup
+from telegram import Updater, ReplyKeyboardMarkup, ParseMode
 from telegram.utils.botan import Botan
 import logging
 import pyUnipdbot
@@ -42,8 +42,9 @@ def botinfo(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.botInfo()
     b.track(update.message, update.message.text)
-    bot.sendMessage(update.message.chat_id,
+    bot.sendMessage(chat_id=update.message.chat_id,
                     text=reply,
+                    parse_mode=ParseMode.MARKDOWN,
                     reply_markup=ReplyKeyboardMarkup(markup))
 
 
@@ -51,8 +52,9 @@ def mensa(bot, update):
     pyUnipdbot.writedb(update.message.to_dict())
     reply, markup = pyUnipdbot.mensa()
     b.track(update.message, update.message.text)
-    bot.sendMessage(update.message.chat_id,
+    bot.sendMessage(chat_id=update.message.chat_id,
                     text=reply,
+                    parse_mode=ParseMode.MARKDOWN,
                     reply_markup=ReplyKeyboardMarkup(markup))
 
 
@@ -98,8 +100,9 @@ def replier(bot, update):
     command = str(update.message.text).replace('/', '')
     command.lower()
     reply, markup, lat, lon = pyUnipdbot.replier(command)
-    bot.sendMessage(update.message.chat_id,
+    bot.sendMessage(chat_id=update.message.chat_id,
                     text=reply,
+                    parse_mode=ParseMode.MARKDOWN,
                     reply_markup=ReplyKeyboardMarkup(markup))
     if lat is not None and lon is not None:
         bot.sendLocation(update.message.chat_id,
@@ -114,8 +117,9 @@ def position(bot, update):
     try:
         usrCoord = msg['location']
         reply, markup = pyUnipdbot.position(usrCoord)
-        bot.sendMessage(update.message.chat_id,
+        bot.sendMessage(chat_id=update.message.chat_id,
                         text=reply,
+                        parse_mode=ParseMode.MARKDOWN,
                         reply_markup=ReplyKeyboardMarkup(markup))
     except:
         pass

@@ -20,17 +20,11 @@ HOME = """
 Seleziona un comando dalla tastiera!
 """
 BOTINFO = """
-Questo Bot è in fase di sviluppo, ci possono essere problemi o ritardi nelle risposte. 
-
-I dati sulle mense sono ottenuti automaticamente dal sito dell'Esu di Padova. Se il sito non è raggiungibile o non è aggiornato, @UnipdBot non ci può fare molto purtroppo :(
-
+I dati sulle mense sono ottenuti automaticamente dal sito dell'ESU di Padova.
 @UnipdBot è promosso e sponsorizzato da @udupadova e sviluppato da @mikexine. 
-
-Lascia una recensione, clicca su: https://telegram.me/storebot?start=UnipdBot!
-
+*Lascia una recensione*, cercaci su @storebot!
 Per qualunque problema o suggerimento, scrivi a @mikexine qua su Telegram!
-
-Vuoi darci una mano? github.com/mikexine/UnipdBot
+Vuoi dare una mano? Visita `unidata.xyz` o scrivi a `@mikexine`
 """
 
 SELEZIONA = "Seleziona una voce dalla tastiera!"
@@ -161,13 +155,13 @@ def position(usrCoord):
     nearAulaDist = str(round(float(tmp['aulastudio'][nearAula]), 4))
     nearBiblioDist = str(round(float(tmp['biblioteca'][nearBiblio]), 4))
 
-    line1 = "- Mensa più vicina, aperta oggi: %s, distante %s km.\n\n" %\
+    line1 = "- `Mensa` più vicina, aperta oggi: *%s*, distante _%s_ km.\n\n" %\
         (mensa[nearMensa]['nome'].encode("utf-8"),
          nearMensaDist.encode("utf-8"))
-    line2 = "- Aula studio più vicina, aperta oggi: %s, distante %s km.\n\n" %\
+    line2 = "- `Aula studio` più vicina, aperta oggi: *%s*, distante _%s_ km.\n\n" %\
         (aulastudio[nearAula]['nome'].encode("utf-8"),
          nearAulaDist.encode("utf-8"))
-    line3 = "- Biblioteca più vicina, aperta oggi: %s, distante %s km.\n\n" %\
+    line3 = "- `Biblioteca` più vicina, aperta oggi: *%s*, distante _%s_ km.\n\n" %\
         (biblioteca[nearBiblio]['nome'].encode("utf-8"),
          nearBiblioDist.encode("utf-8"))
     reply = line1 + line2 + line3

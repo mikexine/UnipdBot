@@ -26,25 +26,24 @@ for key in mensa:
         cena = False
 
     if pranzo and cena:
-        tmp = "oggi è aperta sia a pranzo che a cena"
+        tmp = "oggi è *aperta* sia a pranzo che a cena"
     elif pranzo and not cena:
-        tmp = "oggi è aperta solo a pranzo"
+        tmp = "oggi è *aperta* solo a pranzo"
     elif cena and not pranzo:
         tmp = "oggi è aperta solo a cena"
 
-    menu = "\n-- PRIMO --\n%s\n-- SECONDO --\n%s\n--\
- CONTORNO --\n%s\n-- DESSERT --\n%s" % \
+    menu = "\n_PRIMO_\n%s\n_SECONDO_\n%s\n_CONTORNO_\n%s\n_DESSERT_\n%s" % \
            (', '.join(mensa[key]['menu']['primo']),
             ', '.join(mensa[key]['menu']['secondo']),
             ', '.join(mensa[key]['menu']['contorno']),
             ', '.join(mensa[key]['menu']['dessert']))
 
     if not pranzo and not cena:
-        text = '-- Mensa %s --\nIn %s.\nOggi la mensa è chiusa.\n' % \
+        text = '*Mensa %s*\nIn %s.\nOggi la mensa è *chiusa*.\n' % \
                 (mensa[key]['nome'].encode("utf-8"),
                  mensa[key]['indirizzo'].encode("utf-8"))
     else:
-        text = '-- Mensa %s --\nIn %s, %s con orario: %s. \n' % \
+        text = '*Mensa %s*\nIn %s, %s con orario: *%s*. \n' % \
                 (mensa[key]['nome'].encode("utf-8"),
                  mensa[key]['indirizzo'].encode("utf-8"),
                  tmp,
@@ -59,7 +58,7 @@ sleep(2)
 
 aulastudio = requests.get(URL + 'aulastudio/', headers=HEADERS).json()
 for key in aulastudio:
-    text = "-- Aula %s --\nPosti: %s\nIndirizzo: %s\nOrari: %s.\n" % \
+    text = "*Aula %s*\n_Posti:_ %s\nIndirizzo: %s\n_Orari:_ %s.\n" % \
            (aulastudio[key]['nome'].encode("utf-8"),
             aulastudio[key]['posti'].encode("utf-8"),
             aulastudio[key]['indirizzo'].encode("utf-8"),
@@ -72,7 +71,7 @@ sleep(2)
 
 biblioteca = requests.get(URL + 'biblioteca/', headers=HEADERS).json()
 for key in biblioteca:
-    text = "-- %s --\nIndirizzo: %s\nOrari: %s.\n" % \
+    text = "*%s*\nIndirizzo: %s\n_Orari:_ %s.\n" % \
            (biblioteca[key]['nome'].encode("utf-8"),
             biblioteca[key]['indirizzo'].encode("utf-8"),
             biblioteca[key]['orario'].encode("utf-8"))
