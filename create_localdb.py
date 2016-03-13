@@ -32,16 +32,23 @@ for key in mensa:
     elif cena and not pranzo:
         tmp = "oggi è aperta solo a cena"
 
-    menu = "\n_PRIMO_\n%s\n_SECONDO_\n%s\n_CONTORNO_\n%s\n_DESSERT_\n%s" % \
-           (', '.join(mensa[key]['menu']['primo']),
-            ', '.join(mensa[key]['menu']['secondo']),
-            ', '.join(mensa[key]['menu']['contorno']),
-            ', '.join(mensa[key]['menu']['dessert']))
+    if mensa[key]['menu']['primo'][0] == "Menu non pubblicato su www.esupd.gov.it/":
+        menu = ""
+    elif mensa[key]['menu']['primo'][0] == "Niente menu, errore su www.esupd.gov.it/":
+        menu = ""
+    else:
+        menu = "\n_PRIMO:_ %s\n_SECONDO:_ %s\n_CONTORNO:_ %s\n_DESSERT:_ %s" % \
+               (', '.join(mensa[key]['menu']['primo']),
+                ', '.join(mensa[key]['menu']['secondo']),
+                ', '.join(mensa[key]['menu']['contorno']),
+                ', '.join(mensa[key]['menu']['dessert']))
 
     if not pranzo and not cena:
         text = '*Mensa %s*\nIn %s.\nOggi la mensa è *chiusa*.\n' % \
                 (mensa[key]['nome'].encode("utf-8"),
                  mensa[key]['indirizzo'].encode("utf-8"))
+        mensa[key]['coord']['lat'] = None
+        mensa[key]['coord']['lon'] = None
     else:
         text = '*Mensa %s*\nIn %s, %s con orario: *%s*. \n' % \
                 (mensa[key]['nome'].encode("utf-8"),
