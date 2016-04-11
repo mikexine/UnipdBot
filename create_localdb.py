@@ -9,7 +9,7 @@ HEADERS = {
     'content-type': 'application/json'
     }
 
-URL = 'http://188.166.145.27/api/unipd/'
+URL = 'http://uniopen.org/api/unipd/'
 
 db = pickledb.load('db/unipdbot.pickledb', False)
 
