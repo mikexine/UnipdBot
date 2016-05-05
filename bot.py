@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from telegram import Updater, ReplyKeyboardMarkup, ParseMode
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import ReplyKeyboardMarkup, ParseMode
 from telegram.utils.botan import Botan
 import logging
 import pyUnipdbot
@@ -137,22 +138,22 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.addTelegramCommandHandler("help", home)
-    dp.addTelegramCommandHandler("start", home)
-    dp.addTelegramCommandHandler("home", home)
+    dp.addHandler(CommandHandler("help", home))
+    dp.addHandler(CommandHandler("start", home))
+    dp.addHandler(CommandHandler("home", home))
 
-    dp.addTelegramCommandHandler("botinfo", botinfo)
+    dp.addHandler(CommandHandler("botinfo", botinfo))
 
-    dp.addTelegramCommandHandler("mensa", mensa)
-    dp.addTelegramCommandHandler("aulastudio", aulastudio)
-    dp.addTelegramCommandHandler("biblioteca", biblioteca)
-    dp.addTelegramCommandHandler("udupadova", udupadova)
-    dp.addTelegramCommandHandler("diritto_studio", dirittostudio)
+    dp.addHandler(CommandHandler("mensa", mensa))
+    dp.addHandler(CommandHandler("aulastudio", aulastudio))
+    dp.addHandler(CommandHandler("biblioteca", biblioteca))
+    dp.addHandler(CommandHandler("udupadova", udupadova))
+    dp.addHandler(CommandHandler("diritto_studio", dirittostudio))
 
     for command in commands:
-        dp.addTelegramCommandHandler(command, replier)
+        dp.addHandler(CommandHandler(command, replier))
 
-    dp.addTelegramMessageHandler(position)
+    dp.addHandler(MessageHandler([Filters.location], position))
 
     dp.addErrorHandler(error)
     updater.start_polling()

@@ -2,8 +2,8 @@ arrow==0.7.0
 future==0.15.2
 geopy==1.11.0
 pickleDB==0.6.2
-python-dateutil==2.5.0
-python-telegram-bot==3.3
-requests==2.9.1
+python-dateutil==2.5.3
+python-telegram-bot==4.0.3
+requests==2.10.0
 simplejson==3.8.2
 six==1.10.0
