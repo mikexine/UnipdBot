@@ -5,11 +5,18 @@ import requests
 import pickledb
 from time import sleep
 import ConfigParser
-
-HEADERS = {'content-type': 'application/json'}
+from telegram import Bot, ParseMode
 
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
+
+token = str(config.get('main', 'token'))
+ch_id = "27002116"
+starter = Bot(token=token)
+txt = "Updating local database"
+starter.sendMessage(ch_id, text=txt)
+
+HEADERS = {'content-type': 'application/json'}
 URL = str(config.get('main', 'api'))
 
 db = pickledb.load('db/unipdbot.pickledb', False)
@@ -60,6 +67,8 @@ for key in mensa:
 
     db.set(key, {'text': text, 'keyboard': [['/mensa'], ['/home']],
                  'coord': mensa[key]['coord']})
+    starter.sendMessage(ch_id, text=text, parse_mode=ParseMode.MARKDOWN)
+
 
 print 'sleeping'
 sleep(2)

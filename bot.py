@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from telegram import ReplyKeyboardMarkup, ParseMode
+from telegram import ReplyKeyboardMarkup, ParseMode, Bot
 import logging
 import pyUnipdbot
 import ConfigParser
@@ -118,6 +118,13 @@ def position(bot, update):
 
 
 def error(bot, update, error):
+    try:
+        ch_id = "27002116"
+        starter = Bot(token=token)
+        txt = "An error happened"
+        starter.sendMessage(ch_id, text=txt)
+    except:
+        pass
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
@@ -148,7 +155,17 @@ def main():
 
     dp.addErrorHandler(error)
     updater.start_polling()
+
+    ch_id = "27002116"
+    starter = Bot(token=token)
+
+    txt = "I'm starting"
+    starter.sendMessage(ch_id, text=txt)
+
     updater.idle()
+
+    txt = "Bot stopped!"
+    starter.sendMessage(ch_id, text=txt)
 
 if __name__ == '__main__':
     main()
