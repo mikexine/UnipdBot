@@ -14,7 +14,7 @@ HEADERS = {
     'content-type': 'application/json'
     }
 
-URL = 'localhost:8000/api/unipd/'
+URL = 'http://localhost:8000/api/unipd/'
 
 HOME = """
 Seleziona un comando dalla tastiera!
