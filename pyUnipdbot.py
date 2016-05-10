@@ -14,7 +14,7 @@ HEADERS = {
     'content-type': 'application/json'
     }
 
-URL = 'http://uniopen.org/api/unipd/'
+URL = 'https://uniopen.org/api/unipd/'
 
 HOME = """
 Seleziona un comando dalla tastiera!
