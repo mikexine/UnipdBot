@@ -13,7 +13,7 @@ config.read('settings.ini')
 token = str(config.get('main', 'token'))
 ch_id = "27002116"
 starter = Bot(token=token)
-txt = "Updating local database"
+txt = "Updating local unipdbot database"
 starter.sendMessage(ch_id, text=txt)
 
 HEADERS = {'content-type': 'application/json'}
@@ -67,7 +67,6 @@ for key in mensa:
 
     db.set(key, {'text': text, 'keyboard': [['/mensa'], ['/home']],
                  'coord': mensa[key]['coord']})
-    starter.sendMessage(ch_id, text=text, parse_mode=ParseMode.MARKDOWN)
 
 
 print 'sleeping'
