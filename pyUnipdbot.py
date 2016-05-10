@@ -7,14 +7,13 @@ import sqlite3
 import pickledb
 from geopy.distance import vincenty
 import datetime
+import ConfigParser
 
+HEADERS = {'content-type': 'application/json'}
 
-
-HEADERS = {
-    'content-type': 'application/json'
-    }
-
-URL = 'http://localhost:8000/api/unipd/'
+config = ConfigParser.ConfigParser()
+config.read('settings.ini')
+URL = str(config.get('main', 'api'))
 
 HOME = """
 Seleziona un comando dalla tastiera!

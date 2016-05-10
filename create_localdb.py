@@ -4,12 +4,13 @@
 import requests
 import pickledb
 from time import sleep
+import ConfigParser
 
-HEADERS = {
-    'content-type': 'application/json'
-    }
+HEADERS = {'content-type': 'application/json'}
 
-URL = 'http://localhost:8000/api/unipd/'
+config = ConfigParser.ConfigParser()
+config.read('settings.ini')
+URL = str(config.get('main', 'api'))
 
 db = pickledb.load('db/unipdbot.pickledb', False)
 
