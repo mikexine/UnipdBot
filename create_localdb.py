@@ -87,10 +87,18 @@ sleep(2)
 
 biblioteca = requests.get(URL + 'biblioteca/', headers=HEADERS).json()
 for key in biblioteca:
-    text = "*%s*\nIndirizzo: %s\n_Orari:_ %s.\n" % \
+    if key == "metelli":
+        text = "*%s*\nPosti liberi: %s\nIndirizzo: %s\n_Orari:_ %s.\n" % \
            (biblioteca[key]['nome'].encode("utf-8"),
+            biblioteca[key]['posti'].encode("utf-8"),
             biblioteca[key]['indirizzo'].encode("utf-8"),
             biblioteca[key]['orario'].encode("utf-8"))
+
+    else:
+        text = "*%s*\nIndirizzo: %s\n_Orari:_ %s.\n" % \
+               (biblioteca[key]['nome'].encode("utf-8"),
+                biblioteca[key]['indirizzo'].encode("utf-8"),
+                biblioteca[key]['orario'].encode("utf-8"))
     db.set(key, {'text': text, 'keyboard': [['/biblioteca'], ['/home']],
                  'coord': biblioteca[key]['coord']})
 
