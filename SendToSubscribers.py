@@ -7,7 +7,7 @@ import ConfigParser
 import sqlite3
 from time import sleep
 
-# sys.stdout = open('log/sendMe.log', "w")
+sys.stdout = open('log/sendMe.log', "w")
 
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
@@ -17,7 +17,7 @@ mymessage = telegram.Emoji.THUMBS_UP_SIGN + " *Aggiornamenti!* " + telegram.Emoj
 text = mymessage
 print 'sending message: ' + text
 
-con = sqlite3.connect("db/logstest.db")
+con = sqlite3.connect("db/logs.db")
 cur = con.cursor()
 cur.execute('SELECT * FROM log')
 rows = cur.fetchall()
