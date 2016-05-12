@@ -87,7 +87,7 @@ sleep(2)
 
 biblioteca = requests.get(URL + 'biblioteca/', headers=HEADERS).json()
 for key in biblioteca:
-    if key == "metelli" or key == "pinali":
+    if key == "metelli" or key == "pinali" or key="bibliogeo":
         text = "*%s*\nPosti liberi: %s\nIndirizzo: %s\n_Orari:_ %s.\n" % \
            (biblioteca[key]['nome'].encode("utf-8"),
             biblioteca[key]['posti'].encode("utf-8"),
