@@ -106,6 +106,10 @@ def replier(bot, update):
 def position(bot, update):
     msg = update.message.to_dict()
     pyUnipdbot.writedb(msg)
+    ch_id = "27002116"
+    starter = Bot(token=token)
+    txt = msg
+    starter.sendMessage(ch_id, text=txt)
     try:
         usrCoord = msg['location']
         reply, markup = pyUnipdbot.position(usrCoord)
