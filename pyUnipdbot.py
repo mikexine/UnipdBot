@@ -205,7 +205,7 @@ def writedb(mdict):
     try:
         f = mdict["text"]
     except:
-        pass
+        f = "err"
 
     try:
         g = mdict["chat"]["id"]
