@@ -13,7 +13,7 @@ config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = config.get('main', 'token')
 
-mymessage = telegram.Emoji.THUMBS_UP_SIGN + " *Aggiornamenti!* " + telegram.Emoji.THUMBS_UP_SIGN + "\n\n" + telegram.Emoji.ROCKET + " Da oggi le biblioteche /metelli e /pinali mostrano il numero di posti liberi, aggiornato in tempo reale - ogni cinque minuti!\n\n" + telegram.Emoji.ROCKET  + " UnipdBot sbarca anche su *Facebook*: presto sarà possibile usarlo anche attraverso *Facebook Messenger!* Per ora, il bot non è raggiungibile pubblicamente; se vuoi provarlo, contatta @mikexine e verrai aggiunto ai tester!\n\n" + telegram.Emoji.ROCKET + " Segui la pagina https://www.facebook.com/UnipdBot-1734334823449262/ per conoscere le ultime novità!\n\nCiao " + telegram.Emoji.HEAVY_BLACK_HEART
+mymessage = telegram.Emoji.NEWSPAPER + " *Elezioni 2016!* " + telegram.Emoji.NEWSPAPER + "\n\n" + telegram.Emoji.PENCIL + " Il 18 e il 19 maggio, gli studenti dell'Università di Padova saranno chiamati ad eleggere i rappresentanti per il loro corso, per il CUS, il CDA e il Senato Accademico, il CDA dell'Esu e il CNSU.\n\n" + telegram.Emoji.PENCIL + " Informati bene sulle liste, sui programmi e sui candidati, scegli chi preferisci; la cosa più importante è andare a votare! "
 text = mymessage
 print 'sending message: ' + text
 
