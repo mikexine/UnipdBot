@@ -125,7 +125,7 @@ def simpleText(bot, update):
     pyUnipdbot.writedb(msg)
     text = ""
     try:
-        text += msg['from']['id']
+        text += str(msg['from']['id'])
         bot.sendMessage(chat_id=27002116,
                         text=text)
     except:
