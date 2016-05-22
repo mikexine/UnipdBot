@@ -145,8 +145,9 @@ def admin_reply(bot, update, args):
     servicer = Bot(token=servicetoken)
     if update.message.from_user.id == 27002116:
         try:
+            tmp = "/reply " + args[0] + " "
             sent = bot.sendMessage(chat_id=args[0],
-                                   text=args[1])
+                                   text=str(update.message.text).replace(tmp, ""))
             servicer.sendMessage(chat_id=27002116, text=str(sent))
         except:
             servicer.sendMessage(chat_id=27002116, text="error happened") 
