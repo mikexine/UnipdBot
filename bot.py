@@ -143,7 +143,7 @@ def admin_reply(bot, update, args):
         try:
             tmp = "/reply " + args[0] + " "
             sent = bot.sendMessage(chat_id=args[0],
-                                   text=str(update.message.text).replace(tmp, ""))
+                                   text=(update.message.text).replace(tmp, ""))
             servicer.sendMessage(chat_id=27002116, text=str(sent))
         except:
             servicer.sendMessage(chat_id=27002116, text="error happened") 
