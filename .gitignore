@@ -9,3 +9,5 @@ test2.py
 *.pickledb
 env/
 exclude.txt
+manual.txt
+privateSend.py
