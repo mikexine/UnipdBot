@@ -10,6 +10,7 @@ import ConfigParser
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = str(config.get('main', 'token'))
+servicetoken = str(config.get('main', 'servicetoken'))
 
 TOPCOMMANDS = ['start', 'home', 'help', 'botinfo',
                'mensa', 'aulastudio', 'biblioteca',
@@ -138,6 +139,23 @@ def simpleText(bot, update):
                        message_id=update.message.message_id)
 
 
+def admin_reply(bot, update, args):
+    msg = update.message.to_dict()
+    pyUnipdbot.writedb(msg)
+    servicer = Bot(token=servicetoken)
+    if update.message.from_user.id == 27002116:
+        try:
+            sent = bot.sendMessage(chat_id=args[0],
+                                   text=args[1])
+            servicer.sendMessage(chat_id=27002116, text=str(sent))
+        except:
+            servicer.sendMessage(chat_id=27002116, text="error happened") 
+    else:
+        bot.sendMessage(chat_id=update.message.chat_id,
+                        text="error - you're not powerful enough")
+
+
+
 def error(bot, update, error):
     try:
         ch_id = "27002116"
@@ -171,6 +189,8 @@ def main():
 
     for command in commands:
         dp.addHandler(CommandHandler(command, replier))
+
+    dp.addHandler(CommandHandler("reply", admin_reply, pass_args=True))
 
     dp.addHandler(MessageHandler([Filters.location], position))
     dp.addHandler(MessageHandler([Filters.text], simpleText))
