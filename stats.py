@@ -39,8 +39,8 @@ for r in arrow.Arrow.range('day', start, end):
 user_msg += "\n--> %s users in %s chats" % (users[0], chats[0])
 
 
-print n_msg
-print user_msg
+# print n_msg
+# print user_msg
 
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
