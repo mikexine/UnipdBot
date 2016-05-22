@@ -10,7 +10,7 @@ from telegram import Bot, ParseMode
 config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 
-token = str(config.get('main', 'token'))
+token = str(config.get('main', 'servicetoken'))
 ch_id = "27002116"
 starter = Bot(token=token)
 txt = "Updating local unipdbot database"

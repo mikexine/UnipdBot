@@ -104,6 +104,7 @@ def replier(bot, update):
 
 
 def position(bot, update):
+    print "running position"
     msg = update.message.to_dict()
     pyUnipdbot.writedb(msg)
     try:
@@ -115,6 +116,26 @@ def position(bot, update):
                         reply_markup=ReplyKeyboardMarkup(markup))
     except:
         pass
+
+
+def simpleText(bot, update):
+    print "running simpletext"
+    msg = update.message.to_dict()
+    pyUnipdbot.writedb(msg)
+    text = ""
+    try:
+        text += "%s %s | %s, id: %s\n\n" % (msg['from']['first_name'],
+                                            msg['from']['last_name'],
+                                            msg['from']['username'],
+                                            msg['from']['id'])
+        text += msg['text']
+        bot.sendMessage(chat_id=27002116,
+                        text=text)
+    except:
+        pass
+    bot.forwardMessage(chat_id=27002116,
+                       from_chat_id=update.message.chat_id,
+                       message_id=update.message.message_id)
 
 
 def error(bot, update, error):
@@ -152,7 +173,14 @@ def main():
         dp.addHandler(CommandHandler(command, replier))
 
     dp.addHandler(MessageHandler([Filters.location], position))
-    dp.addHandler(MessageHandler([Filters.text], position))
+    dp.addHandler(MessageHandler([Filters.text], simpleText))
+    dp.addHandler(MessageHandler([Filters.audio], simpleText))
+    dp.addHandler(MessageHandler([Filters.photo], simpleText))
+    dp.addHandler(MessageHandler([Filters.document], simpleText))
+    dp.addHandler(MessageHandler([Filters.sticker], simpleText))
+    dp.addHandler(MessageHandler([Filters.video], simpleText))
+    dp.addHandler(MessageHandler([Filters.voice], simpleText))
+    dp.addHandler(MessageHandler([Filters.contact], simpleText))
 
     dp.addErrorHandler(error)
     updater.start_polling()

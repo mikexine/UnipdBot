@@ -3,3 +3,5 @@
 token = YOUR_BOTS_TOKEN_HERE
 logging = LOGGING_LEVEL
 api = API_URL
+prodtoken = production_token
+servicetoken = service_token
