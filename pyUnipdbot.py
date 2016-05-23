@@ -23,7 +23,9 @@ I dati sulle mense sono ottenuti automaticamente dal sito dell'ESU di Padova.
 @UnipdBot è promosso e sponsorizzato da @udupadova e sviluppato da @mikexine. 
 *Lascia una recensione*, cercaci su @storebot!
 Per qualunque problema o suggerimento, scrivi a @mikexine qua su Telegram!
-Vuoi dare una mano? Visita `unidata.xyz` o scrivi a `@mikexine`
+
+
+Vuoi dare una mano? Visita https://uniopen.org o scrivi direttamente al bot :) 
 """
 
 SELEZIONA = "Seleziona una voce dalla tastiera!"
