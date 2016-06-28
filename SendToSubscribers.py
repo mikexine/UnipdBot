@@ -13,7 +13,7 @@ config = ConfigParser.ConfigParser()
 config.read('settings.ini')
 token = config.get('main', 'token')
 
-mymessage = telegram.Emoji.NEWSPAPER + " *Elezioni 2016!* " + telegram.Emoji.NEWSPAPER + "\n\n" + telegram.Emoji.PENCIL + " Il 18 e il 19 maggio, gli studenti dell'Università di Padova saranno chiamati ad eleggere i rappresentanti per il loro corso, per il CUS, il CDA e il Senato Accademico, il CDA dell'Esu e il CNSU.\n\n" + telegram.Emoji.PENCIL + " Informati bene sulle liste, sui programmi e sui candidati, scegli chi preferisci; la cosa più importante è andare a votare! "
+mymessage = "Ciao! Hai un momento libero?\n\n" + telegram.Emoji.PENCIL + " Compila il questionario Io Studente, bastano 5 minuti! Un modo per fotografare la condizione materiale degli studenti universitari del nostro paese, dagli alloggi ai trasporti passando per il costo della vita.\n\n" + telegram.Emoji.PENCIL + " Il link al questionario è questo: https://goo.gl/mlck4s \n\nGrazie, e in bocca al lupo per la sessione! " + telegram.Emoji.HEAVY_BLACK_HEART
 text = mymessage
 print 'sending message: ' + text
 
